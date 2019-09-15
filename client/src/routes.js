@@ -8,6 +8,7 @@ import Login from "./authentication/Login"
 import Logout from "./authentication/Logout"
 
 import MyAccount from "./Users/My account/MyAccount"
+import NotFound from "./notFound"
 // import { Container } from './styles';
 
 export default function Routes(){
@@ -18,6 +19,7 @@ export default function Routes(){
         <Route path="/register" component={Register} exact/>
         <Route path="/logout" component={Logout} exact/>
         <Route path="/myaccount" component={MyAccount} exact/>
+        <Route component={NotFound} />
     </Switch>
   );
 }
