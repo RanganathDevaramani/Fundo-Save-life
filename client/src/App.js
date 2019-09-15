@@ -1,13 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Layout } from 'antd';
 import { BrowserRouter } from "react-router-dom"
 import AppBar from "./AppBar"
-import AppFooter from "./AppFooter"
+// import AppFooter from "./AppFooter"
 import Routes from "./routes"
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 class App extends React.Component {
 
@@ -18,12 +17,12 @@ class App extends React.Component {
           <Header>
             <AppBar />
           </Header>
-          <Content>
+          <Content style={{ backgroundColor: "white"}}>
             <Routes />
           </Content>
-          <Footer>
+          {/* <Footer>
             <AppFooter />
-          </Footer>
+          </Footer> */}
         </Layout>
       </BrowserRouter>
     );
