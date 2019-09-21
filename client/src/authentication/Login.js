@@ -1,57 +1,58 @@
 import React, { Component } from 'react'
-import { Form, Icon, Input, Button, Checkbox, Card, notification } from 'antd';
-import { Link } from "react-router-dom"
-import axios from "axios"
+import { Form, Icon, Input, Button, Checkbox, Card, message } from 'antd';
+import { Link, Redirect } from "react-router-dom"
+import axios from "../config/axios"
 import "../App.css"
 
 class LoginForm extends Component {
-    constructor(){
-        super()
-        this.state={
-            notice : ""
+    constructor(props) {
+        super(props)
+        this.state = {
+            redirect : false
         }
     }
-    
-    openNotification = () => {
-        notification.open({
-          message: "Successfully logged in",
-          description:
-            'You are ready to go...',
-          style: {
-            width: 600,
-            marginLeft: 335 - 600,
-          },
-        });
-      };
+    error = () => {
+        message.error("something went wrong");
+    };
+    success = () => {
+        message.success('You are successfully logged in');
+    };
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                // console.log('Received values of form: ', values);
-                const formdata = {
+                const formData = {
                     email: values.email,
                     password: values.password
                 }
-                axios.post("http://localhost:3005/users/login", formdata)
-                    .then(() => {})
-                    .catch(err => console.log(err))
-                this.openNotification()
-                setTimeout(() => {
-                    this.props.history.push("/")
-                }, 2000);
-
+                console.log(formData)
+                axios.post('/users/login', formData)
+                    .then(response => 
+                    {
+                        localStorage.setItem('token', response.data.token)
+                        this.props.handleIsAuthenticated(true)
+                        this.setState(() => ({ redirect: true }))
+                        this.success()
+                    }
+                    )
+                    .catch(err => {
+                        this.err()
+                    })
             }
         });
     };
 
     render() {
+        if(this.state.redirect){
+            return <Redirect to="/" />
+        }
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="row align-items-center">
                 <div className="col-sm-4">
                 </div>
                 <div className="col-sm-3" style={{ marginTop: 80 }}>
-                    
+
                     <Card title="Sign in" style={{ width: 475, marginTop: 80, borderRadius: 10, marginBottom: 43, fontSize: 20 }} headStyle={{ textAlign: "center", fontSize: 30 }}>
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Item style={{ width: 420 }} label="E-mail">
@@ -100,7 +101,7 @@ class LoginForm extends Component {
                             </Form.Item>
                         </Form>
                     </Card>
-                    
+
                 </div>
                 <div className="col-sm-1">
 

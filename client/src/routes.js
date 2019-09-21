@@ -11,16 +11,20 @@ import MyAccount from "./Users/My account/MyAccount"
 import NotFound from "./notFound"
 // import { Container } from './styles';
 
-export default function Routes(){
-  return (
-    <Switch>
-        <Route path="/" component={Home} exact/>
-        <Route path="/login" component={Login} exact/>
-        <Route path="/register" component={Register} exact/>
-        <Route path="/logout" component={Logout} exact/>
-        <Route path="/myaccount" component={MyAccount} exact/>
-        <Route component={NotFound} />
-    </Switch>
-  );
+
+class Routes extends React.Component{
+  render(){
+    return (
+      <Switch>
+          <Route path="/" component={Home} exact/>
+          <Route path='/logout' render={(props) => <Logout  {...props} handleIsAuthenticated={this.props.handleIsAuthenticated}/> }></Route>
+          <Route path='/login' render={(props) => <Login  {...props} handleIsAuthenticated={this.props.handleIsAuthenticated}/> }></Route>
+          <Route path='/myaccount' render={(props) => <MyAccount  {...props} handleIsAuthenticated={this.props.handleIsAuthenticated}/> }></Route>
+          <Route path="/register" component={Register} exact/>
+          <Route path="*" component={NotFound} />
+      </Switch>
+    );
+  }
 }
 
+export default Routes

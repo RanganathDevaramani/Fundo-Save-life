@@ -4,7 +4,7 @@
   font-size: 55px;
   font-weight: 600;
   font-family: lato;
-  color : white;
+  color : #ff5e14;
 }
 
 .title{
@@ -25,4 +25,11 @@
   color : green;
   font-weight: 400;
 }
-/* style={{ marginTop:50, marginBottom : -40, color : "white", textAlign: "center", fontSize:}} */
+.background-reg{
+    color: hsla(0,0%,100%,.6);
+
+    background: url("https://github.com/images/modules/site/heroes/simple-codelines.svg"),#2b3137;
+    background-position: center 100%;
+    background-size: cover;
+    height : 758px;
+}

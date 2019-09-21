@@ -52,12 +52,12 @@ class RegistrationForm extends Component {
     render() {
         const { getFieldDecorator } = this.props.form
         return (
-            <div style={{ backgroundColor: "#6f0000" }}>
+            <div className="background-reg">
                 <div className="row">
                     <div className="col-xs col-sm-1 col-md-1 col-lg-1" ></div>
                     <div className="col-sm reg-title" >
                         <p className="title">We are here to help you</p>
-                        <p>Start the campaign, Raise the money for your good</p>
+                        <p style={{ color : "white"}}>Start the campaign, Raise the money for your good</p>
                     </div>
                     <div className="col-sm-1" ></div>
                     <div className="col-sm">

@@ -1,29 +1,61 @@
 import React from 'react';
 import './App.css';
-import { Layout } from 'antd';
 import { BrowserRouter } from "react-router-dom"
-import AppBar from "./AppBar"
-// import AppFooter from "./AppFooter"
-import Routes from "./routes"
+import { Link } from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
 
-const { Header, Content } = Layout;
+import Home from "./Users/Home/Home"
+import Register from "./authentication/Register"
+import Login from "./authentication/Login"
+import Logout from "./authentication/Logout"
+
+import MyAccount from "./Users/My account/MyAccount"
+import NotFound from "./notFound"
+
 
 class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      isAuthenticated: !!localStorage.getItem('token')
+    }
+  }
+
+  handleIsAuthenticated = (bool) => {
+    this.setState(() => ({
+      isAuthenticated: bool
+    }))
+  }
 
   render() {
     return (
       <BrowserRouter>
-        <Layout>
-          <Header>
-            <AppBar />
-          </Header>
-          <Content style={{ backgroundColor: "white"}}>
-            <Routes />
-          </Content>
-          {/* <Footer>
-            <AppFooter />
-          </Footer> */}
-        </Layout>
+        <Link to="/">Home</Link>
+        {
+          !this.state.isAuthenticated && (
+            <div>
+              <Link to="/login">Sign In</Link>
+              <Link to="/register">Sign up</Link>
+            </div>
+          )
+        }
+        {
+          this.state.isAuthenticated && (
+            <div>
+              <Link to="/logout">Log out</Link>
+              <Link to="/myaccount">My Account</Link>
+            </div>
+          )
+        }
+
+        <Switch>
+          <Route path="/" component={Home} exact/>
+          <Route path="/register" component={Register} exact/>
+          <Route path='/logout' render={(props) => <Logout  {...props} handleIsAuthenticated={this.handleIsAuthenticated}/> }></Route>
+          <Route path='/login' render={(props) => <Login  {...props} handleIsAuthenticated={this.handleIsAuthenticated}/> }></Route>
+          <Route path='/myaccount' render={(props) => <MyAccount  {...props} handleIsAuthenticated={this.handleIsAuthenticated}/> }></Route>
+          <Route path="*" component={NotFound} />
+        </Switch>
       </BrowserRouter>
     );
   }
